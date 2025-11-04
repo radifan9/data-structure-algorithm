@@ -15,7 +15,7 @@ class LinkedList {
     this.length = 1;
   }
 
-  // Method
+  // Methods
   prepend(value) {
     const newNode = new Node(value);
     newNode.next = this.head;
@@ -26,8 +26,8 @@ class LinkedList {
 
   append(value) {
     const newNode = new Node(value);
-    this.tail.next = newNode; // For the last item, change the next into newNode
-    this.tail = newNode; // Then we make newNode into the latest tail
+    this.tail.next = newNode; // Point the current tail's next to the new node
+    this.tail = newNode; // Update the tail to be the new node
     this.length++;
     return this;
   }
@@ -43,7 +43,7 @@ class LinkedList {
   }
 
   insert(index, value) {
-    // Check params
+    // Check parameters
     if (index === 0) {
       this.prepend(value);
       return this.printList();
@@ -63,7 +63,7 @@ class LinkedList {
   }
 
   remove(index) {
-    // Check params
+    // Check parameters
 
     const leader = this.traverseToIndex(index - 1);
     leader.next = leader.next.next;
@@ -85,22 +85,29 @@ class LinkedList {
   }
 
   reverse() {
-    // Check if there's only 1 node
+    // Check if there is only 1 node
     if (!this.head.next) {
       return this.head;
     }
 
-    let first = this.head;
-    this.tail = this.head;
-    let second = first.next;
+    let first = this.head; // First node
+    this.tail = this.head; // Update tail to be the current head
+    let second = first.next; // Second node
+
+    // Loop as long as there is a second node
     while (second) {
-      const temp = second.next;
-      second.next = first;
+      const temp = second.next; // Store the "third" node
+      second.next = first; // Reverse the pointer to the previous node
+
+      // Move the pointers forward
       first = second;
       second = temp;
     }
+
+    // After completing the loop, update the head and set old head's next to null
     this.head.next = null;
     this.head = first;
+    return this.printList();
   }
 }
 
